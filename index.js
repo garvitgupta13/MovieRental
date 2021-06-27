@@ -11,7 +11,7 @@ require("./startup/db")();
 require("./startup/config")();
 //Validation api
 require("./startup/validation")();
-//To support production
+//To support deployment
 require("./startup/prod")(app);
 
 const server = app.listen(3000, () => {
