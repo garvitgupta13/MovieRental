@@ -21,6 +21,7 @@ $env: backend_jwtPrivateKey="your jwt token"
 
 #### Your backend server will start running at [http://localhost:3000](http://localhost:3000)
 
-#### You can also check the backend live server at [https://garvit-vidlybackend.herokuapp.com/](https://garvit-vidlybackend.herokuapp.com/)
-
 #### To know more about it please refer our [documentation](/documentation.md)
+
+#### You can also check the backend live server at [https://garvit-vidlybackend.herokuapp.com/](https://garvit-vidlybackend.herokuapp.com/)
+I have used AWS cloud service to store the database and heroku for deployment
