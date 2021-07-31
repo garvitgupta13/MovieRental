@@ -3,6 +3,7 @@ const router = Express.Router();
 const mongoose = require("mongoose");
 const auth = require("../middleware/auth");
 const { Customer, validate } = require("../models/customer");
+const validateObjectId = require("../middleware/validateObjectId");
 
 //GET
 router.get("/", auth, async (req, res) => {
@@ -10,7 +11,7 @@ router.get("/", auth, async (req, res) => {
   res.send(customers);
 });
 
-router.get("/:id", auth, async (req, res) => {
+router.get("/:id", [validateObjectId,auth], async (req, res) => {
   const customer = await Customer.findById(req.params.id);
   if (!customer) {
     return res.status(404).send("Not found");
@@ -38,7 +39,7 @@ router.post("/", auth, async (req, res) => {
 });
 
 //PUT
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", [validateObjectId, auth], async (req, res) => {
   const error = validate(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -58,13 +59,5 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-//DELETE
-router.delete("/:id", auth, async (req, res) => {
-  const customer = await Customer.findByIdAndDelete(req.params.id);
-  if (!customer) {
-    return res.status(404).send("Not found");
-  }
-  res.send(customer);
-});
 
 module.exports = router;
