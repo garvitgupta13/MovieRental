@@ -8,22 +8,6 @@ const bcrypt = require("bcrypt"); //For hashing
 const { User } = require("../models/user");
 const auth = require("../middleware/auth"); //Authorization middleware
 
-/*
-//GET
-router.get("/", auth, async (req, res) => {
-  const users = await User.find().sort("name");
-  res.send(users);
-});
-
-router.get("/:id", auth, async (req, res) => {
-  const user = await User.findById(req.params.id);
-  if (!user) {
-    return res.status(404).send("Not found");
-  }
-  res.send(user);
-});
-*/
-
 //POST
 router.post("/", async (req, res) => {
   const error = validate(req.body);
