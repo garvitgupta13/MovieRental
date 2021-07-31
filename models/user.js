@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "User email is compulsary"],
+    required: [true, "User password is compulsary"],
     min: 5
   },
   isAdmin: Boolean
