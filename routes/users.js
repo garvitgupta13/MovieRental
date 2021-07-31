@@ -5,24 +5,7 @@ const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const { User, validateUser } = require("../models/user");
 const auth = require("../middleware/auth"); //Autorization middleware
-
-//GET
-//This route is not safe for seecurity reason, as we dont want to give user detail to anyone (this is just for tutorial purposes)
-router.get("/", auth, async (req, res) => {
-  const users = await User.find().select(["_id", "name", "email"]).sort("name");
-  res.send(users);
-});
-
-/*
-//This route is not safe for seecurity reason, as we dont want to give user detail to anyone (this is just for tutorial purposes)
-router.get("/:id", auth, async (req, res) => {
-  const user = await User.findById(req.params.id);
-  if (!user) {
-    return res.status(404).send("Not found");
-  }
-  res.send(_.pick(user, ["_id", "name", "email"]));
-});
-*/
+const admin = require("../middleware/admin");
 
 //Getting the currently logged in user
 router.get("/me", auth, async (req, res) => {
@@ -32,8 +15,8 @@ router.get("/me", auth, async (req, res) => {
   res.send(user);
 });
 
-//POST
-router.post("/", async (req, res) => {
+//POST (Only admin is allowed to add new user)
+router.post("/", [auth, admin], async (req, res) => {
   const error = validateUser(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
