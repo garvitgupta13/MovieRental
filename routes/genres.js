@@ -7,13 +7,13 @@ const admin = require("../middleware/admin");
 const validateObjectId = require("../middleware/validateObjectId");
 
 //GET
-router.get("/", auth,async (req, res, next) => {
+router.get("/",async (req, res, next) => {
   // throw new Error("Test error"); //Just to test the winston
   const genres = await Genre.find().sort("name");
   res.send(genres);
 });
 
-router.get("/:id", [validateObjectId,auth], async (req, res) => {
+router.get("/:id", validateObjectId, async (req, res) => {
   const genre = await Genre.findById(req.params.id);
   if (!genre) {
     return res.status(404).send("Not found");
